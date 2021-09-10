@@ -1,0 +1,74 @@
+<!-- {{ admins$ | async}} -->
+<div class="px-2 py-5">
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+  <!-- <table #datatable class="display" style="width:100%"> -->
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Created At</th>
+          <th>Updated At</th>
+          <th>Control</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="admins?.length > 0">
+        <tr *ngFor="let person of admins">
+            <td>{{ person?.id }}</td>
+            <td>{{ person?.name }}</td>
+            <td>{{ person?.email }}</td>
+            <td>{{ person?.created_at | date: 'yyyy-MM-dd' }}</td>
+            <td>{{ person?.updated_at  | date: 'yyyy-MM-dd' }}</td>
+            <td class="text-center">
+              <a routerLink="/admin/admins/edit/{{person?.id}}" class="text-success edit mx-2"><i class="fa fa-edit" aria-hidden="true"></i></a>
+              <a (click)="delete(person?.id)" class="text-danger delete mx-2"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+            </td>
+        </tr>
+      </tbody>
+      <!-- <tfoot>
+        <tr>
+          <th><input type="text" placeholder="Search ID" name="search-id"/></th>
+          <th><input type="text" placeholder="Search name" name="search-name"/></th>
+          <th><input type="text" placeholder="Search email" name="search-email"/></th>
+        </tr>
+      </tfoot> -->
+    </table>
+  </div>
+
+<!-- <div class="px-2 py-5">
+  <table #dataTable id="table" class="display" style="width:100%">
+    <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Created At</th>
+          <th>Updated At</th>
+          <th>Control</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let person of admins">
+          <td>{{ person.id }}</td>
+          <td>{{ person.name }}</td>
+          <td>{{ person.email }}</td>
+          <td>{{ person.created_at | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ person.updated_at  | date: 'yyyy-MM-dd' }}</td>
+          <td class="text-center">
+            <a routerLink="/admin/admins/edit/{{person.id}}" class="text-success edit mx-2"><i class="fa fa-edit" aria-hidden="true"></i></a>
+            <a (click)="delete(person.id)" class="text-danger delete mx-2"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+          </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Created At</th>
+          <th>Updated At</th>
+          <th>Control</th>
+        </tr>
+    </tfoot>
+  </table>
+</div> -->

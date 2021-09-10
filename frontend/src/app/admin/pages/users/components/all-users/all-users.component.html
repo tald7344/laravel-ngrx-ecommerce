@@ -1,0 +1,42 @@
+
+<div class="px-2 py-5">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="text-center row-border hover">
+    <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover"> -->
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Level</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+            <th>Approve</th>
+            <th>Control</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="users?.length > 0">
+          <tr *ngFor="let person of users">
+              <td>{{ person?.id }}</td>
+              <td>{{ person?.name ? person.name : '-' }}</td>
+              <td>{{ person?.email ? person.email : '-' }}</td>
+              <td>{{ person?.level }}</td>
+              <td>{{ person?.created_at | date: 'yyyy-MM-dd' }}</td>
+              <td>{{ person?.updated_at  | date: 'yyyy-MM-dd' }}</td>
+              <td><a class="btn btn-outline-{{ person.approve ? 'danger' : 'success' }} btn-sm" (click)="approve(person.id, person.approve)">{{ person.approve == 1 ? 'Not Approve' : 'Approve' }}</a></td>
+              <td class="text-center">
+                <a routerLink="/admin/users/edit/{{person.id}}" class="text-success edit mx-2"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                <a (click)="delete(person.id)" class="text-danger delete mx-2" [class.disabled]="isDeleted"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+              </td>
+          </tr>
+        </tbody>
+        <!-- <tfoot>
+          <tr>
+            <th><input type="text" placeholder="Search ID" name="search-id"/></th>
+            <th><input type="text" placeholder="Search name" name="search-name"/></th>
+            <th><input type="text" placeholder="Search email" name="search-email"/></th>
+          </tr>
+        </tfoot> -->
+      </table>
+    </div>
+
+

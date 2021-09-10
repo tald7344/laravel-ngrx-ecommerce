@@ -1,0 +1,64 @@
+<!-- general form elements -->
+<div class="container-fluid">
+    <div class="content-header">
+        <h1>Edit User</h1>
+    </div>
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Edit Current User</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+            <div class="card-body">
+                <div class="form-group">
+                    <label class="col-form-label" for="inputUserNameSuccess">Name</label>
+                    <input class="form-control"
+                           [ngClass]="{'is-invalid': uploadForm.get('name').errors &&
+                           (uploadForm.get('name').touched || uploadForm.get('name').dirty)}"
+                           type="text"
+                           name="name"
+                           id="inputUserNameSuccess"
+                           formControlName="name"
+                           placeholder="Type The Name">
+                    <span class="invalid-feedback" *ngIf="uploadForm.get('name').errors?.required">Name Field Is Required</span>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email"
+                           [ngClass]="{'is-invalid': uploadForm.get('email').errors &&
+                           (uploadForm.get('email').touched || uploadForm.get('email').dirty)}"
+                           name="email"
+                           formControlName="email"
+                           id="exampleInputEmail1"
+                           class="form-control"
+                           placeholder="Type The Email">
+                    <span class="invalid-feedback" *ngIf="uploadForm.get('email').errors?.required">Email Field Is Required</span>
+                    <span class="invalid-feedback" *ngIf="uploadForm.get('email').errors?.email">Please enter a vaild email address</span>
+                </div>
+                <div class="form-group row">
+                    <label class="col-12 col-form-label">Level</label>
+                    <div class="col-12">
+                      <select class="form-control"
+                              name="level"
+                              formControlName="level"
+                              (change)="changeLevel($event)"
+                              [ngClass]="{'is-invalid': isSubmited && uploadForm.get('level').errors}">
+                          <option value="">Select User Level</option>
+                          <option value="user">User</option>
+                          <option value="company">Company</option>
+                          <option value="vendor">Vendor</option>
+                      </select>
+                    <span class="invalid-feedback" *ngIf="isSubmited && this.uploadForm.get('level').errors?.required">Level Field Is Required</span>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+            <button type="submit" class="btn btn-primary" [disabled]="uploadForm.invalid || isSubmited">Submit</button>
+            </div>
+        </form>
+    </div>
+    <!-- /.card -->
+</div>

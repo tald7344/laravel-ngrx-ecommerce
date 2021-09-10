@@ -1,0 +1,37 @@
+<div class="px-2 py-5">
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+    <!-- <table #datatable class="display" style="width:100%"> -->
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Flag</th>
+      <th>English Name</th>
+      <th>Arabic Name</th>
+      <th>Country Code</th>
+      <th>Country Code</th>
+      <th>Created At</th>
+      <th>Updated At</th>
+      <th>Control</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="countries?.length > 0">
+    <tr *ngFor="let country of countries">
+      <td>{{ country?.id }}</td>
+
+      <td *ngIf="!country?.logo"><img src="../../../../../../assets/default-image.jpg" class="img-fluid custom-flag" alt="Flag Country"></td>
+      <td *ngIf="country?.logo"><img src="{{ country?.base_url + '/' + country?.logo }}" class="img-fluid custom-flag" alt="Flag Country"></td>
+
+      <td>{{ country?.countries_name_en }}</td>
+      <td>{{ country?.countries_name_ar }}</td>
+      <td>{{ country?.mob }}</td>
+      <td>{{ country?.code }}</td>
+      <td>{{ country?.created_at | date: 'yyyy-MM-dd' }}</td>
+      <td>{{ country?.updated_at  | date: 'yyyy-MM-dd' }}</td>
+      <td class="text-center">
+        <a routerLink="/admin/countries/edit/{{country?.id}}" class="text-success edit mx-2"><i class="fa fa-edit" aria-hidden="true"></i></a>
+        <a (click)="delete(country?.id, country?.logo)" class="text-danger delete mx-2"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,82 @@
+<div class="login-box">
+  <div class="login-logo">
+    <a routerLink="/"><b>Ecommerce</b>DTD</a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Sign in to start your session</p>
+      <div class="alert alert-danger mb-0 my-2" [hidden]="!error">
+        {{ error }}
+      </div>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="input-group mb-3">
+          <input type="email"
+                 [ngClass]="{'is-invalid': loginForm.get('email').errors &&
+                 (loginForm.get('email').touched || loginForm.get('email').dirty)}" 
+                 name="email" 
+                 formControlName="email" 
+                 class="form-control" 
+                 placeholder="Email" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+          <span class="invalid-feedback" *ngIf="loginForm.get('email').errors?.required">Email Field Is Required</span>               
+          <span class="invalid-feedback" *ngIf="loginForm.get('email').errors?.email">Email Must Be Valid</span>               
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" 
+                [ngClass]="{'is-invalid': loginForm.get('password').errors &&
+                (loginForm.get('password').touched || loginForm.get('password').dirty)}"
+                name="password" 
+                formControlName="password" 
+                class="form-control" 
+                placeholder="Password" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+          <span class="invalid-feedback" *ngIf="loginForm.get('password').errors?.required">Password Field Is Required</span>               
+        </div>
+        <div class="row">
+          <!-- <div class="col-8">
+            <div class="icheck-primary">
+              <input type="checkbox" name="rememberme" id="remember" [(ngModel)]="form.rememberme">
+              <label for="remember">
+                Remember Me
+              </label>
+            </div>
+          </div> -->
+          <!-- /.col -->
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary btn-block" [disabled]="!loginForm.valid">Login</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+      <div class="social-auth-links text-center mb-3">
+        <p>- OR -</p>
+        <a href="#" class="btn btn-block btn-primary">
+          <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+        </a>
+        <a href="#" class="btn btn-block btn-danger">
+          <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+        </a>
+      </div>
+      <!-- /.social-auth-links -->
+
+      <p class="mb-1">
+        <a routerLink="/admin/auth/forget-password">I forgot my password</a>
+      </p>
+      <!-- <p class="mb-0">
+        <a href="register.html" class="text-center">Register a new membership</a>
+      </p> -->
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->

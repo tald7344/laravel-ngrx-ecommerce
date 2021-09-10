@@ -1,0 +1,161 @@
+<!-- general form elements -->
+<div class="container-fluid">
+    <div class="content-header">
+        <h1>Settings Page</h1>
+    </div>
+    <div class="card card-info">
+        <div class="card-header">
+            <h3 class="card-title">Settings</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+            <div class="card-body">
+                <div class="form-group" *ngIf="error$ | async as error">
+                    <div class="alert alert-danger text-center mx-auto">{{ error }}</div>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="inputUsersitename_arSuccess">Site Arabic Name</label>
+                    <input class="form-control"
+                           [ngClass]="{'is-invalid': uploadForm.get('sitename_ar').errors &&
+                           (uploadForm.get('sitename_ar').touched || uploadForm.get('sitename_ar').dirty)}"
+                           type="text"
+                           name="sitename_ar"
+                           id="inputUsersitename_arSuccess"
+                           formControlName="sitename_ar"
+                           placeholder="Type The site arabic name">
+                    <!-- <span class="invalid-feedback" *ngIf="uploadForm.get('sitename_ar').errors?.required">Site Arabic Name Field Is Required</span> -->
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="inputUsersitename_arSuccess">Site English Name</label>
+                    <input class="form-control"
+                           type="text"
+                           name="sitename_en"
+                           id="inputUsersitename_enSuccess"
+                           formControlName="sitename_en"
+                           placeholder="Type The site arabic name">
+                </div>
+<!--                <div class="form-group">-->
+<!--                    <label for="exampleInputlogo1">Logo</label>-->
+<!--                    <div class="form-group">-->
+<!--                        <dropzone-->
+<!--                                *ngIf="type === 'component'"-->
+<!--                                class="dropzone-container"-->
+<!--                                [config]="config"-->
+<!--                                [disabled]="disabled"-->
+<!--                                [message]="'Click or drag images here to upload'"-->
+<!--                                (init)="onUploadInit($event)"-->
+<!--                                (error)="onUploadError($event)"-->
+<!--                                (canceled)="onUploadCanceled($event)"-->
+<!--                                (reset)="onRemoveLogo()"-->
+<!--                                (success)="onUploadSuccess($event)"></dropzone>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <app-upload-images
+                  [labelTitle]="'Logo'"
+                  [uploadImageClass]="'dropzone-logo-container'"
+                  [componentDataEmitter]="settingsData"
+                  [property]="'logo'"
+                  [storagePath]="'settings'"
+                  [uploadType]="'single'"
+                  (imageUrlEmitter)="getLogoUrl($event)"
+                  [isParentSubmitted]="isSubmitted"></app-upload-images>
+              <app-upload-images
+                [labelTitle]="'Icon'"
+                [uploadImageClass]="'dropzone-icon-container'"
+                [componentDataEmitter]="settingsData.asObservable()"
+                [property]="'icon'"
+                [storagePath]="'settings'"
+                [uploadType]="'single'"
+                (imageUrlEmitter)="getIconUrl($event)"
+                [isParentSubmitted]="isSubmitted"></app-upload-images>
+<!--                <div class="form-group">-->
+<!--                    <label for="exampleInputicon1">Icon</label>-->
+<!--                    <div class="form-group">-->
+<!--                        <dropzone #DropzoneIconComponent-->
+<!--                                *ngIf="type === 'component'"-->
+<!--                                class="dropzone-icon-container"-->
+<!--                                [config]="iconConfig"-->
+<!--                                [disabled]="iconDisabled"-->
+<!--                                [message]="'Click or drag images here to upload'"-->
+<!--                                (init)="onIconUploadInit($event)"-->
+<!--                                (error)="onIconUploadError($event)"-->
+<!--                                (canceled)="onIconUploadCanceled($event)"-->
+<!--                                (reset)="onRemoveIcon()"-->
+<!--                                (success)="onIconUploadSuccess($event)"></dropzone>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email</label>
+                    <input type="email"
+                           [ngClass]="{'is-invalid': uploadForm.get('email').errors &&
+                           (uploadForm.get('email').touched || uploadForm.get('email').dirty)}"
+                           name="email"
+                           formControlName="email"
+                           id="exampleInputEmail1"
+                           class="form-control"
+                           placeholder="Type The Email">
+                    <span class="invalid-feedback" *ngIf="uploadForm.get('email').errors?.email">Please enter a vaild email address</span>
+                </div>
+                <div class="form-group row">
+                    <label class="col-12 col-form-label">Default Language</label>
+                    <div class="col-12">
+                        <select class="form-control"
+                                name="default_lang"
+                                formControlName="default_lang"
+                                (change)="changeLang($event)">
+                            <option value="">Select User Level</option>
+                            <option value="en">English</option>
+                            <option value="ar">Arabic</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputdescription">Description</label>
+                    <textarea name="description"
+                              formControlName="description"
+                              class="form-control"
+                              id="exampleInputdescription"
+                              placeholder="Type The Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputkeywords1">Keywords</label>
+                    <textarea name="keywords"
+                              formControlName="keywords"
+                              class="form-control"
+                              id="exampleInputkeywords1"
+                              placeholder="Type The keywords"></textarea>
+                </div>
+                <div class="form-group row">
+                    <label class="col-12 col-form-label">Status</label>
+                    <div class="col-12">
+                        <select class="form-control"
+                                name="status"
+                                formControlName="status"
+                                (change)="changeStatus($event)">
+                            <option value="">Select Website Status</option>
+                            <option value="open">Open</option>
+                            <option value="close">Close</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputmessage_maintenance1">Message Maintenance</label>
+                    <textarea name="message_maintenance"
+                              formControlName="message_maintenance"
+                              class="form-control"
+                              id="exampleInputmessage_maintenance1"
+                              placeholder="Type The Message Maintenance"></textarea>
+                </div>
+
+
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+            <button type="submit" class="btn btn-primary" [disabled]="uploadForm.invalid">Submit</button>
+            </div>
+        </form>
+    </div>
+    <!-- /.card -->
+</div>

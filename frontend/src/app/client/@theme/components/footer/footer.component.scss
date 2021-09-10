@@ -1,0 +1,41 @@
+@import "src/global";
+@import "src/variable";
+
+.footer-area {
+  padding-top: 100px;
+  background-color: #222222;
+  h6 {
+    color: #fff;
+    margin-bottom: 25px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .instafeed {
+    margin: -5px;
+    li {
+      overflow: hidden;
+      width: 25%;
+      img { margin: 5px; }
+    }
+  }
+  .footer-social {
+    a {
+      padding-right: 25px;
+      @include transition(all, 0.3s);
+      &:hover i { color: $orange; }
+    }
+    i {
+      color: #cccccc;
+      -webkit-transition: all 0.3s ease 0s;
+      -moz-transition: all 0.3s ease 0s;
+      -o-transition: all 0.3s ease 0s;
+      transition: all 0.3s ease 0s;
+    }
+  }
+  .footer-bottom {
+    .footer-text {
+      padding-top: 80px;
+      a, i { color: $orange; }
+    }
+  }
+}

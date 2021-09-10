@@ -1,0 +1,78 @@
+<!-- general form elements -->
+<div class="container-fluid">
+  <div class="content-header">
+    <h1>New Country</h1>
+  </div>
+  <div class="card card-info">
+    <div class="card-header">
+      <h3 class="card-title">Add New Country</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+      <div class="card-body">
+        <div class="form-group">
+          <label class="col-form-label" for="inputEnglishNameSuccess">English Name</label>
+          <input class="form-control"
+                 [ngClass]="{'is-invalid': uploadForm.get('countries_name_en').errors &&
+                           (uploadForm.get('countries_name_en').touched || uploadForm.get('countries_name_en').dirty)}"
+                 type="text"
+                 name="name"
+                 id="inputEnglishNameSuccess"
+                 formControlName="countries_name_en"
+                 placeholder="Type Country English Name">
+          <span class="invalid-feedback" *ngIf="uploadForm.get('countries_name_en').errors?.required">English Name Field Is Required</span>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label" for="inputArabicNameSuccess">Arabic Name</label>
+          <input class="form-control"
+                 [ngClass]="{'is-invalid': uploadForm.get('countries_name_ar').errors &&
+                           (uploadForm.get('countries_name_ar').touched || uploadForm.get('countries_name_ar').dirty)}"
+                 type="text"
+                 name="name"
+                 id="inputArabicNameSuccess"
+                 formControlName="countries_name_ar"
+                 placeholder="Type Country Arabic Name">
+          <span class="invalid-feedback" *ngIf="uploadForm.get('countries_name_ar').errors?.required">Arabic Name Field Is Required</span>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label" for="inputCallingCodeSuccess">Calling Code</label>
+          <input class="form-control"
+                 [ngClass]="{'is-invalid': uploadForm.get('mob').errors &&
+                           (uploadForm.get('mob').touched || uploadForm.get('mob').dirty)}"
+                 type="text"
+                 name="name"
+                 id="inputCallingCodeSuccess"
+                 formControlName="mob"
+                 placeholder="Type Calling Code">
+          <span class="invalid-feedback" *ngIf="uploadForm.get('mob').errors?.required">Calling Code Field Is Required</span>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label" for="inputCountryCodeSuccess">Country Code</label>
+          <input class="form-control"
+                 [ngClass]="{'is-invalid': uploadForm.get('code').errors &&
+                           (uploadForm.get('code').touched || uploadForm.get('code').dirty)}"
+                 type="text"
+                 name="name"
+                 id="inputCountryCodeSuccess"
+                 formControlName="code"
+                 placeholder="Type Country Code">
+          <span class="invalid-feedback" *ngIf="uploadForm.get('code').errors?.required">Country Code Field Is Required</span>
+        </div>
+        <app-upload-images
+          [labelTitle]="'Country Flag'"
+          [property]="'logo'"
+          [storagePath]="'countries'"
+          [uploadType]="'single'"
+          (imageUrlEmitter)="getImageUrl($event)"
+          [isParentSubmitted]="isSubmitted"></app-upload-images>
+      </div>
+      <!-- /.card-body -->
+
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" [disabled]="uploadForm.invalid">Submit</button>
+      </div>
+    </form>
+  </div>
+  <!-- /.card -->
+</div>

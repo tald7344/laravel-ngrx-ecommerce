@@ -1,0 +1,17 @@
+
+<div class="form-group">
+  <label for="inputCountryFlag">{{ labelTitle }}</label>
+  <div class="form-group" id="inputCountryFlag">
+    <dropzone
+      *ngIf="type === 'component'"
+      class="{{uploadImageClass}}"
+      [config]="config"
+      [disabled]="disabled"
+      [message]="'Click or drag images here to upload'"
+      (init)="onUploadInit($event)"
+      (error)="onUploadError($event)"
+      (canceled)="onUploadCanceled($event)"
+      (reset)="onRemoveImage()"
+      (success)="onUploadSuccess($event)"></dropzone>
+  </div>
+</div>

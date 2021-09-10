@@ -1,0 +1,86 @@
+// /* You can add global styles to this file, and also import other style files */
+// // regular style toast
+@import '~ngx-toastr/toastr';
+@import 'dropzone';
+@import "global";
+
+
+  /********* Global Style *********/
+  .sidebar-collapse .form-control-sidebar,
+  .sidebar-collapse .form-control-sidebar~.input-group-append,
+  .sidebar-collapse .sidebar-search-results {
+    display: none !important;
+  }
+
+  .disabled {
+    pointer-events: none;
+    cursor: default;
+  }
+//   a.btn-danger { color: #fff !important; }
+
+// /*Global Class*/
+// .img-custom {
+//   width: 75px;
+//   max-width: none;
+// }
+// .search-input { font-size: 14px; }
+// td { font-size: 14px; vertical-align: middle !important; }
+
+// .text-light-blue {
+//   color: #3acce1;
+// }
+
+// .text-grey-blue {
+//   color: #21a5b8;
+// }
+
+// .bg-light-blue {
+//   background-color: #3acce1;
+// }
+
+// .bg-grey-blue {
+//   background-color: #21a5b8;
+// }
+
+// .bg-grey {
+//   background-color: #dbdbdb;
+// }
+
+// .img-responsive {
+//   width: 100%;
+//   height: 100%;
+// }
+
+// a { text-decoration: none; color: #fff;
+//   -webkit-transition: all .5s ease-in-out;
+//   -moz-transition: all .5s ease-in-out;
+//   -o-transition: all .5s ease-in-out;
+//   transition: all .5s ease-in-out;
+//   &:hover, &:active { text-decoration: none; }
+// }
+// /*Global Class*/
+// html, body { height: 100%; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// .td-custom {
+//   max-height: 100px;
+//   overflow-y: scroll;
+//   display: block;
+//   border-bottom: none !important;
+//   overflow-x: hidden;
+//   &::-webkit-scrollbar {
+//     width: 4px;
+//   }
+//   &::-webkit-scrollbar-track {
+//     background: #f1f1f1;
+//   }
+//   &::-webkit-scrollbar-thumb {
+//     background: #ccc;
+//   }
+//   &::-webkit-scrollbar-thumb:hover {
+//     background: #999;
+//   }
+// }
+// .td-custom {
+//   margin-bottom: .75rem
+// }

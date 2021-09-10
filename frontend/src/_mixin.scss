@@ -1,0 +1,13 @@
+@mixin transition($attr, $time) {
+  -webkit-transition: $attr $time ease 0s;
+  -moz-transition: $attr $time ease 0s;
+  -o-transition: $attr $time ease 0s;
+  transition: $attr $time ease 0s;
+}
+
+@mixin gradientBackground() {
+  background: -webkit-linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
+  background: -moz-linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
+  background: -o-linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
+  background: linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
+}
