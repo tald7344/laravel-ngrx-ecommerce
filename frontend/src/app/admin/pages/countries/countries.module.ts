@@ -11,6 +11,7 @@ import { EditCountryComponent } from './components/edit-country/edit-country.com
 import * as fromCountries from './store/countries.reducer';
 import { CountriesEffects } from './store/countries.effects';
 import {CountriesService} from './services/countries.service';
+import {DropzoneModule} from 'ngx-dropzone-wrapper';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import {CountriesService} from './services/countries.service';
     CountriesRoutingModule,
     StoreModule.forFeature(fromCountries.countriesFeatureKey, fromCountries.reducer),
     EffectsModule.forFeature([CountriesEffects]),
+    // DropzoneModule
   ],
   providers: [CountriesService]   // if Not provider the services here the route will not pass into the Interceptor
 })

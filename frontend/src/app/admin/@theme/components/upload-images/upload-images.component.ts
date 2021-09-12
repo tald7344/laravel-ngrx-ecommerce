@@ -41,6 +41,7 @@ export class UploadImagesComponent implements OnInit, AfterViewInit {
   @ViewChild(DropzoneComponent, { static: false }) componentRef?: DropzoneComponent;
   // @ViewChild('DropzoneIconComponent') componentIconRef?: DropzoneComponent;
   // @ViewChild(DropzoneDirective, { static: false }) directiveRef?: DropzoneDirective;
+
   uploadForm: FormGroup;
   componentData: any;
   type = 'component';
@@ -83,7 +84,7 @@ export class UploadImagesComponent implements OnInit, AfterViewInit {
     // Subscribe if Form is Submit Or Not
     this.isParentSubmitted.subscribe(submitRes => this.formSubmit = submitRes);
     // Subscribe Until Get ComponentData
-    // if (this.componentDataEmitter) {
+    if (this.componentDataEmitter) {
     //   console.log('component data emitter is exists');
       this.componentDataEmitter.subscribe(res => {
         // debugger;
@@ -91,7 +92,7 @@ export class UploadImagesComponent implements OnInit, AfterViewInit {
         this.componentData = res;
         this.renderingImage(res);
       });
-    // }
+    }
   }
 
   // ngOnChanges(changes: SimpleChanges): void {
@@ -100,7 +101,8 @@ export class UploadImagesComponent implements OnInit, AfterViewInit {
   // }
 
   ngAfterViewInit(): void {
-    this.dropzone = this.componentRef?.directiveRef?.dropzone();
+    // this.dropzone = this.componentRef?.directiveRef?.dropzone();
+    // debugger;
     // console.log('on Change : ', this.componentRef?.directiveRef?.dropzone());
     // this.renderingImage(this.componentData);
   }
@@ -117,22 +119,24 @@ export class UploadImagesComponent implements OnInit, AfterViewInit {
       const mockFile = { name: flagFileName, size: "35315" };
       // debugger;
       // Check IF There is an Image Stored For This Country and the logo Link is contain this.storagePath keyword
+      console.log(imageUrlArray?.includes(this.storagePath));
       if (imageUrlArray?.includes(this.storagePath)) {
       // debugger;
         // Prevent display image if logoFileName is not fetched or if empty
 
         const checkDropZone = setInterval(() => {
-          // const dropzone = this.componentRef?.directiveRef?.dropzone();
-            console.log('checkDropZone', this.dropzone);
+          const dropzone = this.componentRef?.directiveRef?.dropzone();
       // debugger;
-          if (this.dropzone) {
-            // TODO Fix image not display in edit-country compoenent
+          if (dropzone) {
+            console.log('drop zone in upload image : ', dropzone);
+            // TODO Implement upload-images components every where
             console.log('DropZone is Exists', this.dropzone);
             if (flagFileName) {
+              // debugger;
               this.config.clickable = false;  // prevent to upload second image if the image is stored in this.database
-              this.dropzone.emit( 'addedfile', mockFile );
-              this.dropzone.emit( 'thumbnail', mockFile, componentData.base_url + '/' + componentData[this.property] );
-              this.dropzone.emit( 'complete', mockFile);
+              dropzone.emit( 'addedfile', mockFile );
+              dropzone.emit( 'thumbnail', mockFile, componentData.base_url + '/' + componentData[this.property] );
+              dropzone.emit( 'complete', mockFile);
             }
             console.log('Dropzone exists');
             clearInterval(checkDropZone);
@@ -149,7 +153,7 @@ export class UploadImagesComponent implements OnInit, AfterViewInit {
 
 
   onRemoveImage() {
-    debugger;
+    // debugger;
     // Make isSubmitted false to prevent execute the automatic onRemoveImage function once submitting the form
     // Prevent display image if imageUrl is not fetched or if empty
     if (this.imageUrl && this.formSubmit == false) {
@@ -180,7 +184,7 @@ export class UploadImagesComponent implements OnInit, AfterViewInit {
   public onUploadSuccess(args: any): void {
     console.log('onUploadSuccess:', args);
     this.imageUrl = args[1];
-    debugger;
+    // debugger;
     this.imageUrlEmitter.emit(this.imageUrl);
     this.disabled = true;
   }

@@ -59,31 +59,22 @@
                  placeholder="Type Country Code">
           <span class="invalid-feedback" *ngIf="uploadForm.get('code').errors?.required">Country Code Field Is Required</span>
         </div>
-        <app-upload-images
-          [labelTitle]="'Country Flag'"
-          [uploadImageClass]="'dropzone-country-container'"
-          [componentDataEmitter]="countryData.asObservable()"
-          [property]="'logo'"
-          [storagePath]="'countries'"
-          [uploadType]="'single'"
-          (imageUrlEmitter)="getFlagUrl($event)"
-          [isParentSubmitted]="isSubmitted"></app-upload-images>
-<!--        <div class="form-group">-->
-<!--          <label for="inputCountryFlag">Country flag</label>-->
-<!--          <div class="form-group" id="inputCountryFlag">-->
-<!--            <dropzone-->
-<!--              *ngIf="type === 'component'"-->
-<!--              class="dropzone-container"-->
-<!--              [config]="config"-->
-<!--              [disabled]="disabled"-->
-<!--              [message]="'Click or drag images here to upload'"-->
-<!--              (init)="onUploadInit($event)"-->
-<!--              (error)="onUploadError($event)"-->
-<!--              (canceled)="onUploadCanceled($event)"-->
-<!--              (reset)="onRemoveFlag()"-->
-<!--              (success)="onUploadSuccess($event)"></dropzone>-->
-<!--          </div>-->
-<!--        </div>-->
+        <div class="form-group">
+          <label for="inputCountryFlag">Country flag</label>
+          <div class="form-group" id="inputCountryFlag">
+            <dropzone
+              *ngIf="type === 'component'"
+              class="dropzone-container"
+              [config]="config"
+              [disabled]="disabled"
+              [message]="'Click or drag images here to upload'"
+              (init)="onUploadInit($event)"
+              (error)="onUploadError($event)"
+              (canceled)="onUploadCanceled($event)"
+              (reset)="onRemoveFlag()"
+              (success)="onUploadSuccess($event)"></dropzone>
+          </div>
+        </div>
       </div>
       <!-- /.card-body -->
 

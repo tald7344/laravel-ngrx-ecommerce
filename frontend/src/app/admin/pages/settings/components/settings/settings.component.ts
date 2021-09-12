@@ -50,8 +50,8 @@ export class SettingsComponent implements OnInit {
   public config: DropzoneConfigInterface;
   public iconConfig: DropzoneConfigInterface;
 
-  isSubmitted: EventEmitter<boolean> = new EventEmitter<boolean>();
-  settingsData: Subject<Setting> = new Subject<Setting>();
+  // isSubmitted: EventEmitter<boolean> = new EventEmitter<boolean>();
+  // settingsData: Subject<Setting> = new Subject<Setting>();
 
 
   constructor(private store: Store<SettingsState>,
@@ -63,41 +63,41 @@ export class SettingsComponent implements OnInit {
     // Dispatch settings
     this.store.dispatch(settingsAction.loadSettings());
     // Get The token to use it with dropzone file
-    // this.store.select(getTokenSelector).subscribe(token => {
-    //   this.token = token;
-    //   this.config = {
-    //       url: AdminConfig.uploadAPI,
-    //       headers : {
-    //         Authorization: 'Bearer ' + token
-    //       },
-    //       params: {
-    //         file_name: 'logo',
-    //         path: 'settings',
-    //         upload_type: 'single'
-    //       },
-    //       clickable: true,
-    //       maxFiles: 1,
-    //       autoReset: null,
-    //       errorReset: null,
-    //       cancelReset: null
-    //  };
-    //  this.iconConfig = {
-    //     url: AdminConfig.uploadAPI,
-    //     headers : {
-    //       Authorization: 'Bearer ' + token
-    //     },
-    //     params: {
-    //       file_name: 'icon',
-    //       path: 'settings',
-    //       upload_type: 'single'
-    //     },
-    //     clickable: true,
-    //     maxFiles: 1,
-    //     autoReset: null,
-    //     errorReset: null,
-    //     cancelReset: null
-    //   };
-    // });
+    this.store.select(getTokenSelector).subscribe(token => {
+      this.token = token;
+      this.config = {
+          url: AdminConfig.uploadAPI,
+          headers : {
+            Authorization: 'Bearer ' + token
+          },
+          params: {
+            file_name: 'logo',
+            path: 'settings',
+            upload_type: 'single'
+          },
+          clickable: true,
+          maxFiles: 1,
+          autoReset: null,
+          errorReset: null,
+          cancelReset: null
+     };
+     this.iconConfig = {
+        url: AdminConfig.uploadAPI,
+        headers : {
+          Authorization: 'Bearer ' + token
+        },
+        params: {
+          file_name: 'icon',
+          path: 'settings',
+          upload_type: 'single'
+        },
+        clickable: true,
+        maxFiles: 1,
+        autoReset: null,
+        errorReset: null,
+        cancelReset: null
+      };
+    });
     this.initSettingsForm();    // Init the form
     this.getSettings();         // run get settings Method
 
@@ -109,30 +109,30 @@ export class SettingsComponent implements OnInit {
     this.subscription = this.store.select(getSettingsSelector).subscribe(
       data => {
         if (data) {
-          // console.log('data', data);
+          console.log('data', data);
           this.settings = data;
-          this.settingsData.next(data);
-          // this.logoUrl = data?.logo;
-          // this.iconUrl = data?.icon;
-          // const logoFileName = data?.logo?.split('/')[1];
-          // const iconFileName = data?.icon?.split('/')[1];
-          // const dropzone = this.componentRef?.directiveRef?.dropzone();
-          // const iconDropzone = this.componentIconRef?.directiveRef?.dropzone();
-          // const mockFile = { name: logoFileName, size: "35315" };
-          // const iconMockFile = { name: iconFileName, size: "15315" };
+          // this.settingsData.next(data);
+          this.logoUrl = data?.logo;
+          this.iconUrl = data?.icon;
+          const logoFileName = data?.logo?.split('/')[1];
+          const iconFileName = data?.icon?.split('/')[1];
+          const dropzone = this.componentRef?.directiveRef?.dropzone();
+          const iconDropzone = this.componentIconRef?.directiveRef?.dropzone();
+          const mockFile = { name: logoFileName, size: "35315" };
+          const iconMockFile = { name: iconFileName, size: "15315" };
           // Prevent display image if logoFileName is not fetched or if empty
-          // if (dropzone && logoFileName) {
-          //   this.config.clickable = false;  // prevent to upload second image if the image is stored in database
-          //   dropzone.emit( "addedfile", mockFile );
-          //   dropzone.emit( "thumbnail", mockFile, data.base_url + '/' + data.logo );
-          //   dropzone.emit( "complete", mockFile);
-          // }
-          // if (iconDropzone && iconFileName) {
-          //   this.iconConfig.clickable = false;  // prevent to upload second image if the image is stored in database
-          //   iconDropzone.emit( "addedfile", iconMockFile );
-          //   iconDropzone.emit( "thumbnail", iconMockFile, data.base_url + '/' + data.icon );
-          //   iconDropzone.emit( "complete", iconMockFile);
-          // }
+          if (dropzone && logoFileName) {
+            this.config.clickable = false;  // prevent to upload second image if the image is stored in database
+            dropzone.emit( "addedfile", mockFile );
+            dropzone.emit( "thumbnail", mockFile, data.base_url + '/' + data.logo );
+            dropzone.emit( "complete", mockFile);
+          }
+          if (iconDropzone && iconFileName) {
+            this.iconConfig.clickable = false;  // prevent to upload second image if the image is stored in database
+            iconDropzone.emit( "addedfile", iconMockFile );
+            iconDropzone.emit( "thumbnail", iconMockFile, data.base_url + '/' + data.icon );
+            iconDropzone.emit( "complete", iconMockFile);
+          }
           this.fillSettingsForm(data);
         }
     });
@@ -183,108 +183,110 @@ export class SettingsComponent implements OnInit {
   }
 
   onSubmit() {
-    this.isSubmitted.emit(true);
+    // this.isSubmitted.emit(true);
     if (!this.uploadForm.valid) {
       this.toaster.error('Sorry, Form Not Valid');
       return;
     }
-    // debugger;
     const formValue = this.uploadForm.getRawValue();
-    // if (this.logoUrl) {
-    //   formValue.logo = this.logoUrl;
+    // debugger;
+    if (this.logoUrl) {
+      formValue.logo = this.logoUrl;
       // empty LogoUrl to prevent the automatic onRemoveLogo function from executing it content
-      // this.logoUrl = '';
+      this.logoUrl = '';
       // debugger;
-    // }
-    // if (this.iconUrl) {
-    //   formValue.icon = this.iconUrl;
+    }
+    if (this.iconUrl) {
+      formValue.icon = this.iconUrl;
       // empty LogoUrl to prevent the automatic onRemoveIcon function from executing it content
-    //   this.iconUrl = '';
-    // }
+      this.iconUrl = '';
+    }
     console.log('Submit Settings Form: ', formValue);
     console.log('Logo URl: ', this.logoUrl);
     console.log('Icon Url: ', this.iconUrl);
-    // debugger
+    // debugger;
     this.store.dispatch(settingsAction.saveSettings({settings: formValue}));
   }
 
 
-  getLogoUrl(event) {
-    this.logoUrl = event;
-    this.uploadForm.get('logo').setValue(this.logoUrl);
-    // debugger;
+  // getLogoUrl(event) {
+  //   this.logoUrl = event;
+  //   this.uploadForm.get('logo').setValue(this.logoUrl);
+  //   // debugger;
+  // }
+  //
+  // getIconUrl(event) {
+  //   this.iconUrl = event;
+  //   this.uploadForm.get('icon').setValue(this.iconUrl);
+  //   // debugger;
+  // }
+
+  public onUploadCanceled(event) {
+    console.log('canceled : ', event);
   }
 
-  getIconUrl(event) {
-    this.iconUrl = event;
-    this.uploadForm.get('icon').setValue(this.iconUrl);
-    // debugger;
+  public onIconUploadCanceled(event) {
+    console.log('Icon canceled : ', event);
   }
 
-  // public onUploadCanceled(event) {
-  //   console.log('canceled : ', event);
-  // }
-  //
-  // public onIconUploadCanceled(event) {
-  //   console.log('Icon canceled : ', event);
-  // }
+  onRemoveLogo() {
+    // Prevent display image if logoUrl is not fetched or if empty
+    if (this.logoUrl) {
+      this.uploadService.resetDropZoneUpload(this.logoUrl, 'logo', 'settings').subscribe(
+        data => {
+          this.logoUrl = '';
+          this.uploadForm.get('logo').setValue(this.logoUrl);
+          this.disabled = false;
+          this.config.clickable = true;
+          this.toaster.success(data.success);
+          console.log('data : ', data);
+        }
+      );
+    }
+  }
 
-  // onRemoveLogo() {
-  //   // Prevent display image if logoUrl is not fetched or if empty
-  //   if (this.logoUrl) {
-  //     this.uploadService.resetDropZoneUpload(this.logoUrl, 'logo', 'settings').subscribe(
-  //       data => {
-  //         this.logoUrl = '';
-  //         this.disabled = false;
-  //         this.config.clickable = true;
-  //         this.toaster.success(data.success);
-  //         console.log('data : ', data);
-  //       }
-  //     );
-  //   }
-  // }
-  //
-  // onRemoveIcon() {
-  //   // Prevent display image if logoUrl is not fetched or if empty
-  //   if (this.iconUrl) {
-  //     this.uploadService.resetDropZoneUpload(this.iconUrl, 'icon', 'settings').subscribe(
-  //       data => {
-  //         this.iconUrl = '';
-  //         this.iconDisabled = false;
-  //         this.iconConfig.clickable = true;
-  //         this.toaster.success(data.success);
-  //         console.log('data : ', data);
-  //       }
-  //     );
-  //   }
-  // }
-  //
-  // public onUploadInit(args: any): void {
-  //   console.log('onUploadInit:', args);
-  // }
+  onRemoveIcon() {
+    // Prevent display image if logoUrl is not fetched or if empty
+    if (this.iconUrl) {
+      this.uploadService.resetDropZoneUpload(this.iconUrl, 'icon', 'settings').subscribe(
+        data => {
+          this.iconUrl = '';
+            this.uploadForm.get('icon').setValue(this.iconUrl);
+          this.iconDisabled = false;
+          this.iconConfig.clickable = true;
+          this.toaster.success(data.success);
+          console.log('data : ', data);
+        }
+      );
+    }
+  }
 
-  // public onIconUploadInit(args: any): void {
-  //   console.log('onIconUploadInit:', args);
-  // }
-  //
-  // public onUploadError(args: any): void {
-  //   console.log('onUploadError:', args);
-  // }
-  //
-  // public onIconUploadError(args: any): void {
-  //   console.log('onIconUploadError:', args);
-  // }
-  //
-  // public onUploadSuccess(args: any): void {
-  //   console.log('onUploadSuccess:', args);
-  //   this.logoUrl = args[1];
-  //   this.disabled = true;
-  // }
-  //
-  // public onIconUploadSuccess(args: any): void {
-  //   console.log('onIconUploadSuccess:', args);
-  //   this.iconUrl = args[1];
-  //   this.iconDisabled = true;
-  // }
+  public onUploadInit(args: any): void {
+    console.log('onUploadInit:', args);
+  }
+
+  public onIconUploadInit(args: any): void {
+    console.log('onIconUploadInit:', args);
+  }
+
+  public onUploadError(args: any): void {
+    console.log('onUploadError:', args);
+  }
+
+  public onIconUploadError(args: any): void {
+    console.log('onIconUploadError:', args);
+  }
+
+  public onUploadSuccess(args: any): void {
+    console.log('onUploadSuccess:', args);
+    this.logoUrl = args[1];
+    this.disabled = true;
+  }
+
+  public onIconUploadSuccess(args: any): void {
+    console.log('onIconUploadSuccess:', args);
+    this.iconUrl = args[1];
+    this.iconDisabled = true;
+  }
 
 }

@@ -71,6 +71,7 @@ class UploadController extends Controller
         $fileName = request()->file_name;        
         $storedPath = request()->stored_path;
         // dd(Country::where('id', request()->id)->first());
+
         // check if there is be an image url to delete
         if (request()->has('imageUrl')) {
             $requestImageUrl = explode('/', request()->imageUrl);
@@ -79,12 +80,16 @@ class UploadController extends Controller
             } else {                                // image url is : imageName_randomNumber.extImg
                 $imageUrl = $storedPath . '/' . request()->imageUrl;
             }
+
+
+        // dd(Storage::has($imageUrl));
+
            // Delete the image
-           Storage::has('public/' . $imageUrl) ? Storage::delete('public/' . $imageUrl) : null;
+           Storage::has($imageUrl) ? Storage::delete($imageUrl) : null;
            switch($storedPath) {
-               case 'settings' :
-                Settings::find(1)->update([$fileName => '']); // empty the logo field from settings table in database
-                break;
+                case 'settings' :
+                    Settings::find(1)->update([$fileName => '']); // empty the logo field from settings table in database
+                    break;
                 case 'countries':
                     Country::where('id', request()->id)->update([$fileName => '']);
                     break;

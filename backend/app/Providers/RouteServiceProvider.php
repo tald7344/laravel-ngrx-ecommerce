@@ -36,6 +36,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {        
+        Config::set('filesystems.disks.public.url', url('storage'));
+
         $this->configureRateLimiting();
 
         $this->routes(function () {
