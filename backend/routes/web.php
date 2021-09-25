@@ -11,6 +11,7 @@
 |
 */
 
+use App\Events\ChatEvent;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

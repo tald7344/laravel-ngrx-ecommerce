@@ -1,0 +1,16 @@
+
+.messages-box {
+  height: 510px;
+  overflow-y: scroll;
+}
+
+.list-group {
+  min-width: max-content;
+  min-width: -webkit-max-content;
+}
+
+.custom-badge {
+  position: absolute;
+  bottom: .75rem;
+  right: 1.25rem;
+}

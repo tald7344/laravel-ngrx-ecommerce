@@ -1,0 +1,19 @@
+<div class="px-4 py-5 chat-box bg-white">
+
+  <!-- Reciever Message-->
+
+<ng-container *ngFor="let messageBody of allMessages">
+  <p *ngIf="selectedUser.id == messageBody?.senderId || selectedUser?.id === messageBody?.receiveId" class="text-muted mb-1" [class.text-right]="messageBody.me">{{messageBody?.from}}</p>
+  <div *ngIf="selectedUser.id == messageBody?.senderId || selectedUser?.id === messageBody?.receiveId" class="media mb-3" [class.ml-auto]="messageBody?.me">
+    <img *ngIf="!messageBody?.me" src="http://lorempixel.com/100/100/people" alt="user" width="50" class="rounded-circle">
+    <div class="media-body" [class.ml-3]="!messageBody.me">
+      <div class="rounded py-2 px-3 mb-2" [ngClass]="messageBody?.me ? 'bg-primary' : 'bg-light'">
+        <p class="text-small mb-0" [ngClass]="messageBody?.me ? 'text-white' : 'text-muted'">{{messageBody?.message}}</p>
+      </div>
+
+    </div>
+  </div>
+</ng-container>
+
+
+</div>

@@ -10,19 +10,23 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MessageEvent implements ShouldBroadcast
+class ChatDirectMessageEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    public $response;
 
-    public $message;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message)
+    public function __construct($data)
     {
-        $this->message = $message;
+        $this->response = [
+            'message'   => $data['message'],
+            'authUserId'    => $data['authUserId'],
+            'from'      => admins()->user()
+        ];
     }
 
     /**
@@ -32,7 +36,6 @@ class MessageEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('channel-message');
+        return new PrivateChannel('channel-direct-message.' . $this->response['authUserId']);
     }
-
 }

@@ -1,0 +1,53 @@
+<div class="container py-5 px-4">
+  <!-- For demo purpose-->
+  <header class="text-center">
+    <h1 class="display-4 mb-4">{{authUser.name}} Chat</h1>
+  </header>
+
+  <div class="row rounded-lg overflow-hidden shadow">
+    <!-- Users box-->
+    <div class="col-5 px-0">
+      <div class="bg-white">
+
+        <div class="px-4 py-2 bg-light">
+          <p class="h5 mb-0 py-1"></p>
+        </div>
+
+        <!-- List Users -->
+        <app-list-users (selectedAuthUser)="getSelectedAuthUser($event)" [messageNotification]="messageNotification" [authUser]="authUser" [usersList]="users"></app-list-users>
+        <!-- List Users -->
+
+      </div>
+    </div>
+    <!-- Chat Box-->
+    <div class="col-7 px-0">
+
+        <ng-container *ngIf="!selectedUser">
+          <div class="p-3 chat-box-header bg-light">
+            <p class="h5 mb-0 py-1 ml-3 d-inline-block">Group Chat</p>
+          </div>
+          <app-chat-body-group [allMessages]="groupMessages"></app-chat-body-group>
+        </ng-container>
+        <ng-container *ngIf="selectedUser">
+          <div class="p-3 chat-box-header bg-light">
+            <img src="http://lorempixel.com/100/100/people" alt="user" width="50" class="rounded-circle">
+            <p class="h5 mb-0 py-1 ml-3 d-inline-block">{{selectedUser.name}}</p>
+          </div>
+          <app-chat-body-private [allMessages]="privateMessages" [authUser]="authUser" [selectedUser]="selectedUser"></app-chat-body-private>
+        </ng-container>
+
+
+      <!-- Typing area -->
+      <form action="#" class="bg-light">
+        <div class="input-group">
+          <input type="text" placeholder="Type a message" [(ngModel)]="inputMessage" name="message" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+          <div class="input-group-append">
+            <button *ngIf="!selectedUser" id="button-addon2" type="submit" (click)="sendGroupMessage()" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
+            <button *ngIf="selectedUser" id="button-addon1" type="submit" (click)="sendPrivateMessage()" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

@@ -31,10 +31,12 @@
     "datatables.net": "^1.10.20",
     "datatables.net-dt": "^1.10.24",
     "jquery": "^3.5.1",
+    "laravel-echo": "^1.11.2",
     "ngx-dropzone": "^3.0.0",
     "ngx-dropzone-wrapper": "^10.0.1",
     "ngx-pagination": "^5.0.0",
     "ngx-toastr": "^13.2.0",
+    "pusher-js": "^7.0.3",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

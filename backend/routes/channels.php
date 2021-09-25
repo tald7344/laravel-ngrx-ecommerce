@@ -14,5 +14,16 @@ use Illuminate\Support\Facades\Broadcast;
 */
 
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
+    // return (int) $user->id === (int) $id;
+    return true;
+});
+
+
+Broadcast::channel('channel-chat', function ($user) {
+    return $user;
+});
+
+Broadcast::channel('channel-direct-message.{id}', function ($user, $id) {
+    // Check if the auth user is the user that send direct message
     return (int) $user->id === (int) $id;
 });

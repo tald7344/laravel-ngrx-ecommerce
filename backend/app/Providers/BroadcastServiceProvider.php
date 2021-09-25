@@ -14,7 +14,8 @@ class BroadcastServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Broadcast::routes();
+        // we use guard 'admin' because we take the token from admin login page
+        Broadcast::routes(['middleware' => ['assign.guard:admin', 'jwt.auth'], 'prefix' => 'admin-api']);
 
         require base_path('routes/channels.php');
     }

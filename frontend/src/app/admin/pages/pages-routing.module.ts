@@ -28,6 +28,10 @@ const routes: Routes = [
           path: 'settings',
           loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule),
         },
+        {
+          path: 'chat',
+          loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule),
+        },
         { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
       ],
     }

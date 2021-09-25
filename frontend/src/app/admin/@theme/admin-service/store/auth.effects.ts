@@ -28,7 +28,7 @@ export class AuthEffects {
         exhaustMap(action => this.registerService.login(action.data)
             .pipe(
                 map(data => {
-                    const user = new User(action.email, data.access_token, data.expires_in, data.token_type);
+                    const user = new User(action.email, data.me, data.access_token, data.expires_in, data.token_type);
                     // this.tokenService.handle(action.email, data.access_token, data.expires_in);
                     this.tokenService.handle(user);
                     // this.authService.changeAuthStatus(true);
@@ -113,7 +113,7 @@ export class AuthEffects {
         .pipe(
           map(response => {
             console.log('effect response : ', response);
-            const user = new User(action.email, response.token.access_token, response.token.expires_in, response.token.token_type);
+            const user = new User(action.email, response.token.me, response.token.access_token, response.token.expires_in, response.token.token_type);
             // this.tokenService.handle(action.email, data.access_token, data.expires_in);
             this.tokenService.handle(user);
             this.toaster.success(response.success);

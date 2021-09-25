@@ -109,6 +109,7 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
+        // TODO prevent admin to delete him self if he logged in
         $admin = Admin::find($id);
         $admin->delete();
         return response()->json(['Success' => 'Admin Deleted Successfully'], Response::HTTP_OK);

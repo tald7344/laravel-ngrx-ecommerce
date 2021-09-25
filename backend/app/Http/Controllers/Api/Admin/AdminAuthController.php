@@ -70,6 +70,7 @@ class AdminAuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
+            'me' => auth('admin')->user(),
             'expires_in' => auth('admin')->factory()->getTTL() * 60,
         ]);
     }

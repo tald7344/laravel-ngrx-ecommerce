@@ -10,7 +10,7 @@ import { SidebarMenuItems } from 'src/app/admin/pages/sidebar-menu';
 })
 export class MainSidebarComponent implements OnInit {
   @Input() sidebar_menu : SidebarMenuItems[];
-
+  authUser = JSON.parse(localStorage.getItem('user')).value.authUser;
 
   constructor() { }
 

@@ -1,3 +1,5 @@
+import {Admin} from './admins/models/admin.model';
+
 export class AdminConfig {
   // An Example | Delete The Content When Started
   // source api
@@ -23,6 +25,10 @@ export class AdminConfig {
   // Settings
   public static settingsAPI                 = AdminConfig.sourceAPI + 'settings';
   public static saveSettingsAPI             = AdminConfig.sourceAPI + 'settings/save';
+
+  // Messages
+  public static messagesAPI                 = AdminConfig.sourceAPI + 'messages';
+  public static messageDirectAPI            = AdminConfig.sourceAPI + 'messageDirect';
 
   // Upload file
   public static uploadAPI                   = AdminConfig.sourceAPI + 'upload';

@@ -7,14 +7,17 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MessageEvent implements ShouldBroadcast
+class ChatEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $message;
+    public $from;
+
     /**
      * Create a new event instance.
      *
@@ -23,6 +26,7 @@ class MessageEvent implements ShouldBroadcast
     public function __construct($message)
     {
         $this->message = $message;
+        $this->from = admins()->user()->name;
     }
 
     /**
@@ -32,7 +36,7 @@ class MessageEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('channel-message');
+        return new PrivateChannel('channel-chat');
     }
 
 }

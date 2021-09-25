@@ -54,10 +54,10 @@ export class RegisterService {
 
   changePassword(email: string, password: string, password_confirmation: string, resetToken: string): Observable<{success: string, token: TokenRespones}> {
     const data = {
-      email: email,
-      password: password,
-      password_confirmation: password_confirmation,	// the name for confirm password must be (password_confirmation)
-      resetToken: resetToken
+      email,
+      password,
+      password_confirmation,	// the name for confirm password must be (password_confirmation)
+      resetToken
     };
     return this.httpClient.post<{success: string, token: TokenRespones}>(
       AdminConfig.resetPasswordAPI, data,

@@ -1,0 +1,43 @@
+<div class="messages-box">
+  <div class="list-group rounded-0">
+
+    <a (click)="changeToGroupChat()" class="list-group-item list-group-item-action rounded-0" style="cursor: pointer">
+      <div class="media">
+        <div class="media-body ml-4">
+          <div class="d-flex align-items-center justify-content-between mb-1">
+            <h6 class="mb-0 text-muted font-weight-light">Group Chat</h6>
+          </div>
+        </div>
+      </div>
+    </a>
+    <a *ngFor="let user of usersList"
+       (click)="selectUser(user)"
+       [class.active]="userActive"
+       class="list-group-item list-group-item-action rounded-0" style="cursor: pointer">
+      <div class="media">
+        <img src="http://lorempixel.com/100/100/people" alt="user" width="50" class="rounded-circle">
+        <div class="media-body ml-4">
+          <div class="d-flex align-items-center justify-content-between mb-1">
+            <h6 class="mb-0">{{user?.name}}</h6><small class="small font-weight-bold">{{user?.created_at | date: 'dd-MM-yyyy'}}</small>
+          </div>
+          <p class="font-italic mb-0 text-small">{{user?.email}}</p>
+        </div>
+        <ng-container *ngIf="user.id == notifyNewMessage?.senderId || user?.id === notifyNewMessage?.receiveId">
+          <span *ngIf="notifyNewMessage.newMessage && !userActive" class="right badge badge-danger">New</span>
+        </ng-container>
+      </div>
+    </a>
+    <a *ngIf="usersList.length == 0"
+       class="list-group-item list-group-item-action rounded-0">
+      <div class="media">
+        <div class="media-body ml-4">
+          <div class="d-flex align-items-center justify-content-between mb-1">
+            <h6 class="mb-0 text-muted font-weight-light">There isn't any user active right now</h6>
+          </div>
+        </div>
+      </div>
+    </a>
+
+
+  </div>
+</div>
