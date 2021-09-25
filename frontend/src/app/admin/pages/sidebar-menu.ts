@@ -79,6 +79,11 @@ export const SIDEBAR_MENU_ITEM: SidebarMenuItems[] = [
         link: '/admin/settings',
     },
     {
+      title: 'Chat',
+      icon: 'nav-icon fas fa-comments',
+      link: '/admin/chat',
+    },
+    {
         title: ' Widgets',
         icon: 'nav-icon fas fa-th',
         budge: 'New',
