@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {environment} from '../../../../../../environments/environment';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import Echo from 'laravel-echo';
 
 
@@ -9,27 +8,42 @@ import Echo from 'laravel-echo';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
+  echo: Echo;
+  inputMessage: string;
+  username = 'Rami';
 
-  constructor() { }
 
-  ngOnInit(): void {
-    // this.testWebSocketsConnection();
+  constructor() {
+    this.websocket();
   }
 
-  testWebSocketsConnection() {
-    // const echo = new Echo({
-    //   broadcaster: 'pusher',
-    //   key: environment.pusher_key,
-    //   cluster: environment.pusher_cluster,
-    //   wsHost: window.location.hostname,
-    //   wsPort: 6001,
-    //   forceTLS: false,
-    //   disableStats: true,
-    // });
-    // echo.channel('chat')
-    //   .listen('ChatEvent', (res) => {
-    //     console.log('Chat Event Data : ', res);
-    //   });
+  ngOnInit(): void {
+    this.websocketChannelListening();
+  }
+
+
+  websocket() {
+    this.echo = new Echo({
+      broadcaster: 'pusher',
+      key: 'as6df655a4sd6f156',
+      cluster: 'mt1',
+      wsHost: window.location.hostname,
+      wsPort: 6001,
+      forceTLS: false,    // Important Line
+      disableStats: true,
+    });
+  }
+
+  websocketChannelListening() {
+    this.echo.channel('chat')
+      .listen('ChatEvent', (res) => {
+        console.log('Chat Event Data : ', res);
+        this.username = res.message;
+      });
+  }
+
+  sendMessage() {
+    console.log('Message : ', this.inputMessage);
   }
 
 }

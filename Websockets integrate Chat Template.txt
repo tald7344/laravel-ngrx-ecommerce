@@ -1,0 +1,11 @@
+1- Google search for chat template
+	- Just type bootstrap 4 chat template
+	- Or Visit (https://bootstrapious.com/p/bootstrap-chat)
+
+
+2- Install Module - components and services :
+	ng g m admin/pages/chat --routing
+	ng g c admin/pages/chat/components/chat
+	ng g c admin/pages/chat/components/chat-body-group
+	ng g c admin/pages/chat/components/list-users
+	ng g s admin/pages/chat/services/chat
