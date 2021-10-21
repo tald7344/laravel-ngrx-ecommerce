@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Messages} from '../../model/messages';
 
 @Component({
   selector: 'app-chat-body-group',
@@ -6,6 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./chat-body-group.component.scss']
 })
 export class ChatBodyGroupComponent implements OnInit {
+  @Input() allMessages: Messages[] = [];
 
   constructor() { }
 

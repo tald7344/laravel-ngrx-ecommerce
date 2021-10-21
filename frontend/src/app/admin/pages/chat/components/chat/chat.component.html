@@ -22,17 +22,17 @@
     <!-- Chat Box-->
     <div class="col-7 px-0">
 
-      <div class="p-3 chat-box-header bg-light">
-        <p class="h5 mb-0 py-1 ml-3 d-inline-block">Group Chat</p>
-      </div>
-      <app-chat-body-group></app-chat-body-group>
+        <div class="p-3 chat-box-header bg-light">
+          <p class="h5 mb-0 py-1 ml-3 d-inline-block">Group Chat</p>
+        </div>
+        <app-chat-body-group [allMessages]="groupMessages"></app-chat-body-group>
 
       <!-- Typing area -->
       <form action="#" class="bg-light">
         <div class="input-group">
           <input type="text" placeholder="Type a message" name="message" [(ngModel)]="inputMessage" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
           <div class="input-group-append">
-            <button id="button-addon2" type="submit" (click)="sendMessage()" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
+            <button id="button-addon2" type="submit" (click)="sendGroupMessage()" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
           </div>
         </div>
       </form>

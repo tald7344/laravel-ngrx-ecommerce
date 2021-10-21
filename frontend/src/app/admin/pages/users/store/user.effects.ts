@@ -103,7 +103,7 @@ export class UserEffects {
   // Approve User
   approveUser$ = createEffect(() => this.actions$.pipe(
     ofType(userAction.approveUser),
-    exhaustMap(action => this.userService.approveUser(action.id, action.approve)
+    switchMap(action => this.userService.approveUser(action.id, action.approve)
       .pipe(
         map(response => {
           const approvedUser: Update<User> = {
@@ -133,7 +133,7 @@ export class UserEffects {
             return userAction.loadUsersSuccess(usersResponse);
           })
         )
-      }      
+      }
       return of(userAction.dummyAction());
     })
   ));

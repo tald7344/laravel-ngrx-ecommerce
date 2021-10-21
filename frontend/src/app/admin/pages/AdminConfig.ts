@@ -24,6 +24,10 @@ export class AdminConfig {
   public static settingsAPI                 = AdminConfig.sourceAPI + 'settings';
   public static saveSettingsAPI             = AdminConfig.sourceAPI + 'settings/save';
 
+  // Messages
+  public static messagesAPI                 = AdminConfig.sourceAPI + 'messages';
+  public static messageDirectAPI            = AdminConfig.sourceAPI + 'messageDirect';
+
   // Upload file
   public static uploadAPI                   = AdminConfig.sourceAPI + 'upload';
   public static resetUploadAPI              = AdminConfig.sourceAPI + 'upload/reset';

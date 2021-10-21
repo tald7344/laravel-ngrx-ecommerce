@@ -1,0 +1,28 @@
+BACKEND STEPS :
+
+1- create private Channel (chat)
+
+2- modify (routes/channels.php) file using this :
+	Broadcast::channel('chat', function ($user) {
+		return $user;       // OR return true;
+	});
+
+3- use the middleware in (Providers/BroadcastServiceProvider.php) as :
+	Broadcast::routes(['middleware' => ['assign.guard:admin', 'jwt.auth'], 'prefix' => 'admin-api']);
+        require base_path('routes/channels.php');
+
+4- create new controller using :
+	php artisan make:controller MessageController
+
+5- In 'MessageController.php' file create sending messsage method :
+	public function sendMessage(Request $request) {
+        	// send event to all user but not to current user
+        	broadcast(new ChatEvent($request->message));
+        	return response()->json(['success' => 'Message Successfully Sent'], Response::HTTP_OK);
+    	}
+
+6- in (routes/admin.php) file add our route :
+	Route::post('messages', [MessagesController::class, 'sendMessage']);
+
+
+

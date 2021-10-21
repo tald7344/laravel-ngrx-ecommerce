@@ -1,5 +1,9 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import Echo from 'laravel-echo';
+import {UserAuth} from '../../../register/model/user-auth';
+import {User} from '../../../users/model/user.model';
+import {ChatService} from '../../services/chat.service';
+import {Messages} from '../../model/messages';
 
 
 @Component({
@@ -11,39 +15,68 @@ export class ChatComponent implements OnInit {
   echo: Echo;
   inputMessage: string;
   username = 'Rami';
+  groupMessages: Messages[] = [];
 
 
-  constructor() {
-    this.websocket();
+
+  constructor(private chatService: ChatService) {
+    this.getSocketsId();
   }
 
   ngOnInit(): void {
-    this.websocketChannelListening();
+    this.joinChat();
+    this.getGroupChat();
   }
 
 
-  websocket() {
-    this.echo = new Echo({
-      broadcaster: 'pusher',
-      key: 'as6df655a4sd6f156',
-      cluster: 'mt1',
-      wsHost: window.location.hostname,
-      wsPort: 6001,
-      forceTLS: false,    // Important Line
-      disableStats: true,
-    });
+  getSocketsId() {
+    this.echo = this.chatService.getSockets();
   }
 
-  websocketChannelListening() {
-    this.echo.channel('chat')
-      .listen('ChatEvent', (res) => {
-        console.log('Chat Event Data : ', res);
-        this.username = res.message;
+
+  joinChat() {
+    this.echo.join(`chat`)
+      .here((users) => {
+        console.log('users here : ', users);
+      })
+      .joining((user) => {
+        console.log('join : ', user.name, user);
+      })
+      .leaving((user) => {
+        console.log('Leave : ', user.name, user);
+      })
+      .error((error) => {
+        console.error(error);
       });
   }
 
-  sendMessage() {
-    console.log('Message : ', this.inputMessage);
+  getGroupChat() {
+    this.echo.private('chat')
+      .listen('ChatEvent', (res) => {
+        const message: Messages = {
+          message: res.message,
+          me: false,
+          from: res.from
+        };
+        this.groupMessages.push(message);
+      });
   }
+
+
+  sendGroupMessage() {
+    if (this.inputMessage) {
+      const socketId = this.echo.socketId();
+      this.chatService.sendMessage(this.inputMessage, socketId).subscribe(data => console.log('subscribe data : ', data));
+      const message: Messages = {
+        message: this.inputMessage,
+        me: true,
+        from: 'You'
+      };
+      this.inputMessage = '';
+      this.groupMessages.push(message);
+    }
+  }
+
+
 
 }
