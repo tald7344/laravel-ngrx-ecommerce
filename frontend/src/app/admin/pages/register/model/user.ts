@@ -1,6 +1,10 @@
+import {UserAuth} from './user-auth';
+
 export class User {
+
   constructor(private email: string,
               public accessToken: string,
+              public authUser: UserAuth,
               private expiresIn: number,
               private tokenType: string) {
               }

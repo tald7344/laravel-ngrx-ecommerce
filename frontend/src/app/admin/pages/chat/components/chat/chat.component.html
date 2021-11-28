@@ -14,7 +14,10 @@
         </div>
 
         <!-- List Users -->
-        <app-list-users></app-list-users>
+        <app-list-users (selectedAuthUser)="getSelectedAuthUser($event)"
+                        [messageNotification]="messageNotification"
+                        [authUser]="authUser"
+                        [usersList]="users"></app-list-users>
         <!-- List Users -->
 
       </div>

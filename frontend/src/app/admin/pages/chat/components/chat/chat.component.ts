@@ -14,9 +14,12 @@ import {Messages} from '../../model/messages';
 export class ChatComponent implements OnInit {
   echo: Echo;
   inputMessage: string;
-  username = 'Rami';
   groupMessages: Messages[] = [];
-
+  users: User[] = [];
+  authUser = JSON.parse(localStorage.getItem('user')).value.authUser;
+  username = this.authUser.name;
+  selectedUser: UserAuth;
+  messageNotification = new EventEmitter<{ newMessage: boolean, senderId: string, receiveId: string}>();
 
 
   constructor(private chatService: ChatService) {
@@ -28,6 +31,11 @@ export class ChatComponent implements OnInit {
     this.getGroupChat();
   }
 
+  getSelectedAuthUser(event) {
+    // console.log('user is : ', event);
+    // console.log('auth user is : ', this.authUser);
+    this.selectedUser = event;
+  }
 
   getSocketsId() {
     this.echo = this.chatService.getSockets();
@@ -37,13 +45,22 @@ export class ChatComponent implements OnInit {
   joinChat() {
     this.echo.join(`chat`)
       .here((users) => {
-        console.log('users here : ', users);
+        this.users = users;
+        this.users = this.users.filter(user => {
+          return user.id !== this.authUser.id;
+        });
+        console.log('users here : ', this.users);
       })
       .joining((user) => {
         console.log('join : ', user.name, user);
+        this.users.push(user);
       })
       .leaving((user) => {
         console.log('Leave : ', user.name, user);
+        this.users = this.users.filter(userList => {
+          return user.id !== userList.id;
+        });
+        console.log('new users : ', this.users);
       })
       .error((error) => {
         console.error(error);
