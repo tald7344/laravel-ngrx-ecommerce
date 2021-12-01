@@ -38,12 +38,25 @@ export class ChatService {
   }
 
 
+  sendDirectMessage(message: string, authUserId: number, socketId: string) {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+        'X-Socket-ID': socketId
+      })
+    };
+    const data = { message, authUserId };
+    // AdminConfig.messageDirectAPI : http://localhost:8000/admin-api/messageDirect
+    return this.httpClient.post(AdminConfig.messageDirectAPI, data, options);
+  }
+
   sendMessage(message: string, socketId: string) {
     // We Insert the Token in header here and not in AuthTokenInterceptor because we want to send 'X-Socket-ID' with headers
     const options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: `Bearer ` + this.token,
+        Authorization: `Bearer ${this.token}`,
         'X-Socket-ID': socketId
       })
     };

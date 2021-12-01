@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('chat', function ($user) {
     return $user;       // OR return true;
 });
+
+
+Broadcast::channel('channel-direct-message.{id}', function ($user, $id) {
+    return (int) $user->id === (int) $id;               // $user->id === authUserId
+});

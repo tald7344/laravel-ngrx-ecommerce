@@ -2,7 +2,7 @@
 
   <!-- Reciever Message-->
   <div *ngFor="let messageBody of allMessages" class="media mb-3" [class.ml-auto]="messageBody?.me">
-    <img *ngIf="!messageBody?.me" src="http://lorempixel.com/100/100/people" alt="user" width="50" class="rounded-circle">
+    <img *ngIf="!messageBody?.me" src="../../../../../../assets/avatar.png" alt="user" width="50" class="rounded-circle">
     <div class="media-body" [class.ml-3]="!messageBody.me">
       <div class="rounded py-2 px-3 mb-2" [ngClass]="messageBody?.me ? 'bg-primary' : 'bg-light'">
         <p class="text-small mb-0" [ngClass]="messageBody?.me ? 'text-white' : 'text-muted'">{{messageBody?.message}}</p>

@@ -26,4 +26,11 @@ class MessagesController extends Controller
 
     }
 
+    public function sendDirectMessage(Request $request)
+    {
+        $data = $request->only(['message', 'authUserId']);
+        broadcast(new ChatDirectMessageEvent($data))->toOthers();
+        return response()->json(['success' => 'Private Message Successfully Sent'], Response::HTTP_OK);
+    }
+
 }

@@ -5,6 +5,7 @@ import { ChatRoutingModule } from './chat-routing.module';
 import { ChatComponent } from './components/chat/chat.component';
 import {ChatBodyGroupComponent} from './components/chat-body-group/chat-body-group.component';
 import {ListUsersComponent} from './components/list-users/list-users.component';
+import {ChatBodyPrivateComponent} from './components/chat-body-private/chat-body-private.component';
 
 
 
@@ -12,7 +13,8 @@ import {ListUsersComponent} from './components/list-users/list-users.component';
   declarations: [
     ChatComponent,
     ChatBodyGroupComponent,
-    ListUsersComponent
+    ListUsersComponent,
+    ChatBodyPrivateComponent
   ],
   imports: [
     ThemeModule,

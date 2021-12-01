@@ -28,7 +28,7 @@ Route::group(['middleware' => ['assign.guard:admin', 'jwt.auth']], function() {
     Route::apiResource('countries', CountriesController::class);
     // Messages
     Route::post('messages', [MessagesController::class, 'sendMessage']);
-    // Route::post('messageDirect', [MessagesController::class, 'sendDirectMessage']);
+    Route::post('messageDirect', [MessagesController::class, 'sendDirectMessage']);
 
     // Route::post('admin', [AdminController::class, 'store']);
     // Route::get('dashboard', 'Api\User\UserController@dashboard');

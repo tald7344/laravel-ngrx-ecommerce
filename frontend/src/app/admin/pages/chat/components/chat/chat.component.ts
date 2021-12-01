@@ -15,6 +15,7 @@ export class ChatComponent implements OnInit {
   echo: Echo;
   inputMessage: string;
   groupMessages: Messages[] = [];
+  privateMessages: Messages[] = [];
   users: User[] = [];
   authUser = JSON.parse(localStorage.getItem('user')).value.authUser;
   username = this.authUser.name;
@@ -29,6 +30,7 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.joinChat();
     this.getGroupChat();
+    this.getPrivateChat();
   }
 
   getSelectedAuthUser(event) {
@@ -80,6 +82,30 @@ export class ChatComponent implements OnInit {
   }
 
 
+  getPrivateChat() {
+    const userAuthId = this.authUser.id;
+    this.echo.private('channel-direct-message.' + userAuthId)   // channel-direct-message.id
+      .listen('ChatDirectMessageEvent', (res) => {
+        const messages: Messages = {
+          message: res.response.message,
+          me: false,
+          from: res.response.from.name,
+          senderId: res.response.from.id,
+          receiveId: res.response.authUserId
+        };
+        const msgNotification = {
+          newMessage: true,
+          senderId: res.response.from.id,
+          receiveId: res.response.authUserId
+        };
+        this.privateMessages.push(messages);
+        this.messageNotification.emit(msgNotification);
+        console.log('Get Private message from chat : ', this.privateMessages);
+      });
+  }
+
+
+
   sendGroupMessage() {
     if (this.inputMessage) {
       const socketId = this.echo.socketId();
@@ -94,6 +120,24 @@ export class ChatComponent implements OnInit {
     }
   }
 
+  sendPrivateMessage() {
+    // Rami authUserId = 1;     channel-direct-message.1
+    // Kenan authUserId = 2;    channel-direct-message.2
+    const socketId = this.echo.socketId();
+    const selectedID = this.selectedUser?.id;     // selectUserId = 2
+    this.chatService.sendDirectMessage(this.inputMessage, +selectedID, socketId)
+      .subscribe(data => console.log('subscribe data : ', data) );
+    const message: Messages = {
+      message: this.inputMessage,
+      me: true,
+      from: 'You',
+      senderId: this.authUser.id,
+      receiveId: selectedID
+    };
+    this.inputMessage = '';
+    this.privateMessages.push(message);
+    console.log('Send Private message from chat : ', this.privateMessages);
+  }
 
 
 }

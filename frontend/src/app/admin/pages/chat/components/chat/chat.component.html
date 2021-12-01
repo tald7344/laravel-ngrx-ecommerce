@@ -22,20 +22,35 @@
 
       </div>
     </div>
-    <!-- Chat Box-->
+    <!-- Chat Box -->
     <div class="col-7 px-0">
 
+    <!-- Group Chat Section -->
+      <ng-container *ngIf="!selectedUser">
         <div class="p-3 chat-box-header bg-light">
           <p class="h5 mb-0 py-1 ml-3 d-inline-block">Group Chat</p>
         </div>
         <app-chat-body-group [allMessages]="groupMessages"></app-chat-body-group>
+      </ng-container>
+
+      <!-- Private Chat Section -->
+      <ng-container *ngIf="selectedUser">
+        <div class="p-3 chat-box-header bg-light">
+          <img src="../../../../../../assets/avatar.png" alt="user" width="50" class="rounded-circle">
+          <p class="h5 mb-0 py-1 ml-3 d-inline-block">{{selectedUser.name}}</p>
+        </div>
+        <app-chat-body-private [allMessages]="privateMessages"
+                               [authUser]="authUser"
+                               [selectedUser]="selectedUser"></app-chat-body-private>
+      </ng-container>
 
       <!-- Typing area -->
       <form action="#" class="bg-light">
         <div class="input-group">
           <input type="text" placeholder="Type a message" name="message" [(ngModel)]="inputMessage" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
           <div class="input-group-append">
-            <button id="button-addon2" type="submit" (click)="sendGroupMessage()" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
+            <button *ngIf="!selectedUser" id="button-addon2" type="submit" (click)="sendGroupMessage()" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
+            <button *ngIf="selectedUser" id="button-addon1" type="submit" (click)="sendPrivateMessage()" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
           </div>
         </div>
       </form>
